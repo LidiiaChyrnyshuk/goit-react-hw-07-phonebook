@@ -10,18 +10,17 @@ export const ContactsList = () => {
   const filter = useSelector(getFilter);
   const distpach = useDispatch();
   console.log(contacts);
-
   const filterContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
-  console.log(filterContacts);
+
   return (
     <ul className={css.contactList}>
-      {filterContacts.map(({ id, name, number }) => {
+      {filterContacts.map(({ id, name, phone }) => {
         return (
           <li key={id} id={id} className={css.item}>
             <p className={css.itemName}>
-              {name}:<span>{number}</span>
+              {name}:<span>{phone}</span>
             </p>
             <button
               className={css.btnDelete}

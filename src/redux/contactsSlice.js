@@ -19,6 +19,7 @@ const handleRejected = (state, action) => {
 
 const handleFetchContactsFulfilled = (state, action) => {
   state.isLoading = false;
+  state.error = null;
   state.items = action.payload;
 };
 
@@ -35,7 +36,7 @@ const handleDeleteContactFulfilled = (state, action) => {
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
-  extraReducer: builder => {
+  extraReducers: builder => {
     builder
       .addCase(fetchContacts.fulfilled, handleFetchContactsFulfilled)
       .addCase(addContact.fulfilled, handleAddContactFulfilled)

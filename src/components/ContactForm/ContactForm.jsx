@@ -32,7 +32,7 @@ export const ContactForm = () => {
 
     const newContact = {
       name,
-      number,
+      phone: number,
     };
 
     dispatch(addContact(newContact));
