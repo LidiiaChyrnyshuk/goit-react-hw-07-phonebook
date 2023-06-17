@@ -29,12 +29,10 @@ export const ContactForm = () => {
     } else if (existingNumber) {
       return alert(`Number "${number}" is already in contacts list`);
     }
-
     const newContact = {
       name,
       phone: number,
     };
-
     dispatch(addContact(newContact));
 
     setName('');
