@@ -2,13 +2,14 @@ import { useState } from 'react';
 import css from './ContactForm.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContacts } from 'redux/selectors';
-import { addContact } from 'redux/contactsSlice';
+import { addContact } from 'redux/operations';
 
 export const ContactForm = () => {
-  const contacts = useSelector(getContacts);
-  const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+
+  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
 
   const handleChange = ({ target: { value, name } }) => {
     if (name === 'name') setName(value);
@@ -17,6 +18,7 @@ export const ContactForm = () => {
 
   const handleSubmit = evt => {
     evt.preventDefault();
+
     const existingName = contacts.some(
       item => item.name.toLowerCase() === name.toLowerCase()
     );
@@ -27,7 +29,13 @@ export const ContactForm = () => {
     } else if (existingNumber) {
       return alert(`Number "${number}" is already in contacts list`);
     }
-    dispatch(addContact(name, number));
+
+    const newContact = {
+      name,
+      number,
+    };
+
+    dispatch(addContact(newContact));
 
     setName('');
     setNumber('');
@@ -42,8 +50,8 @@ export const ContactForm = () => {
           type="text"
           name="name"
           value={name}
-          placeholder="Rosie Simpson"
           onChange={handleChange}
+          placeholder="Rosie Simpson"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
@@ -56,8 +64,8 @@ export const ContactForm = () => {
           type="tel"
           name="number"
           value={number}
-          placeholder="+380556688995"
           onChange={handleChange}
+          placeholder="+380556688995"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
